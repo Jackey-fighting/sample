@@ -1,0 +1,3 @@
+'.source.editorconfig':../../.editorconfig
+  'editor':Sublime Text
+    'commentStart': '# '
