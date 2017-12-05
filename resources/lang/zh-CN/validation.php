@@ -104,7 +104,7 @@ return [
             'rule-name' => 'custom-message',
         ],
         'email' => [
-            'required' => 'youxiang不能为空',
+            'required' => '邮箱不能为空',
         ],
     ],
 
