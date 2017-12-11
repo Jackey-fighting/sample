@@ -28,9 +28,22 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function boot(){//boot()会在类模型加载完后进行加载，所以creating要放在boot中比较好
+        parent::boot();
+
+        static::creating(function($user){
+            $user->activation_token = str_random(30);
+        });
+    }
+
     //生成用户头像
     public function gravatar($size='100'){
         $hash = md5(strtolower(trim($this->attributes['email'])));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
+    }
+
+    //指明一个用户拥有多条微博信息
+    public function statuses(){
+        return $this->hasMany(Status::class);
     }
 }
