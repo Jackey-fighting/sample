@@ -38,3 +38,14 @@ Route::post('password/reset','Auth\ResetPasswordController@reset')->name('passwo
 
 //微博的创建和删除路由
 Route::resource('statuses', 'StatusesController', ['only'=>['store', 'destroy']]);
+
+//测试phone模型
+Route::get('phone','UsersController@phone_user');
+Route::get('userHasMany', 'UsersController@UserHasMyany');
+
+//用户，粉丝
+Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
+Route::get('/users/{user}/followers', 'UserController@followers')->name('users.followers');
+//关注用户 取消用户
+Route::post('/users/followers/{user}', 'FollowersController@store')->name('followers.store');
+Route::delete('/users/followers/{user}', 'FollowersController@destroy')->name('followers.destroy');

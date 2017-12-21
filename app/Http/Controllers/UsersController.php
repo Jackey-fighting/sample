@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Mail;
+use App\Models\Phone;
 
 class UsersController extends Controller
 {
@@ -107,5 +108,34 @@ class UsersController extends Controller
     	Auth::login($user);
     	session()->flash('success', '恭喜你，激活成功！');
     	return redirect()->route('users.show', [$user]);
+    }
+    //测试phone 的belognsTo()方法
+    public function phone_user(){
+    	$phone_user = new Phone;
+    	$result=$phone_user::first()->user;
+    	echo '<pre>';
+    	print_r($result);
+    	echo '</pre>';
+    }
+    //测试User的一对多
+    public function UserHasMyany(User $user){
+    	$result = $user::find(2)->hasPoneMany;
+    	foreach ($result as $value) {
+    		echo 'user_id :'. $value->user_id .' '. 'phone_num :'.$value->phone_num.'<br/>';
+       	}
+    }
+
+    //用户关注人列表的方法
+    public function followings(User $user){
+    	$users = $user->followings()->paginate(30);
+    	$title = '关注的人';
+    	return view('users.show_follow', compact('users','title'));
+    }
+
+    //粉丝展示的列表
+    public function followres(User $user){
+    	$users = $user->followers()->paginate(30);
+    	$title = '粉丝';
+    	return view('users.show_follow', compact('users', 'title'));
     }
 }
